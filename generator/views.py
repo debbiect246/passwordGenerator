@@ -12,9 +12,14 @@ def home(request):
 
 def password(request):
     characters = list('abcdefghijklmnopqrstuvwxyz')
-    length = 10
+
+    if request.GET.get('uppercase'):
+        characters.extend(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+
+    length = int(request.GET.get('length', 12))
+
     thepassword = ''
-    for x in range(length):
+    for bit in range(length):
         thepassword += random.choice(characters)
 
     return render(request, 'generator/password.html', {'password': thepassword})
